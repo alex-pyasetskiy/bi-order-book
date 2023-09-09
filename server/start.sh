@@ -1,0 +1,1 @@
+uvicorn app.main:APP --log-config=log_config.yaml --proxy-headers --reload --host 0.0.0.0 --port 8888

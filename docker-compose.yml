@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  client:
+    build: ./client
+    container_name: client_frontend
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./client:/app
+    networks:
+      - app-cluster
+
+  api_server:
+    container_name: api_server
+    build:
+      context: server
+      dockerfile: Dockerfile
+#    command: uvicorn app.main:APP --log-config=log_config.yaml --proxy-headers --reload --host 0.0.0.0 --port 8888
+    env_file:
+      - .env
+    volumes:
+      - ./server:/app
+      - .env:/app/.env
+    ports:
+      - "8888:8888"
+    depends_on:
+      - mongodb
+    networks:
+      - app-cluster
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
+    environment:
+      - "MONGO_INITDB_DATABASE=${MONGO_DB}"
+      - "MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}"
+      - "MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}"
+    command:
+      mongod --quiet --logpath /dev/null
+    networks:
+      - app-cluster
+
+  proxy:
+    container_name: proxy
+    depends_on:
+      - api_server
+      - client
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    hostname: nginx
+    ports:
+      - "8989:8989"
+    networks:
+      - app-cluster
+
+networks:
+  app-cluster:
