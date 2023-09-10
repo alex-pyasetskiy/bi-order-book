@@ -19,7 +19,7 @@ services:
     build:
       context: server
       dockerfile: Dockerfile
-#    command: uvicorn app.main:APP --log-config=log_config.yaml --proxy-headers --reload --host 0.0.0.0 --port 8888
+#    command: uvicorn app.main:APP --log-config=/app/log_config.yaml --proxy-headers --reload --host 0.0.0.0 --port 8888
     env_file:
       - .env
     volumes:

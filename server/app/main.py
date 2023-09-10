@@ -12,10 +12,13 @@ from fastapi.middleware.cors import CORSMiddleware
 # log.setLevel(logging.DEBUG)
 
 ORIGINS = [
-    "http://localhost:3000",
-    "localhost:3000",
-    "http://localhost:8989",
-    "localhost:8989"
+    # "http://localhost:3000",
+    # "localhost:3000",
+    # "0.0.0.0:3000",
+    # "http://localhost:8989",
+    # "localhost:8989",
+    # "0.0.0.0:8989"
+    "*"
 ]
 def create_app():
     app = FastAPI()
@@ -48,24 +51,3 @@ APP = create_app()
 # client = AsyncIOMotorClient(os.environ["MONGO_URL"])
 # db = client.college
 
-
-# @app.on_event("startup")
-# async def startup_event():
-#     loop = asyncio.get_event_loop()
-#     task = loop.create_task(watch_and_print())
-#     loop.add_signal_handler(signal.SIGINT, lambda: task.cancel())
-#     loop.add_signal_handler(signal.SIGQUIT, lambda: task.cancel())
-#     loop.add_signal_handler(signal.SIGTERM, lambda: task.cancel())
-#     try:
-#         loop.run_until_complete(task)
-#     except asyncio.CancelledError:
-#         pass
-
-# @app.get("/")
-# async def root():
-#     return f"OK"
-#
-#
-# @app.get("/register")
-# async def get_client_id():
-#     return C_MANAGER.register_client()

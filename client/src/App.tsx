@@ -2,13 +2,14 @@ import React from "react";
 import OrderBook from "./OrderBook";
 import { useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { SERVER_URL} from './config';
 
 const App = () => {
     const [clientId, setClientId] = useState();
     const [symbol, setSymbol] = useState('')
 
     useEffect(() => {
-        const url = 'http://localhost:8989/register';
+        const url = SERVER_URL + '/register';
         const getOrderPairs = async () => {
           const resp = await  fetch(url, {headers: {"Content-Type": "application/json"}, method: "POST"})
           const data = await resp.json()

@@ -100,8 +100,8 @@ rebuild: down build ## Stops containers (via 'down'), and rebuilds service image
 # clean
 #
 clean: ## Removes containers, images, volumes [file], build cache
-	@$(DOCKER_COMPOSE) -f "$(file)" down --volumes --rmi all &&
-	docker builder prune
+	@$(DOCKER_COMPOSE) -f "$(file)" down --volumes --rmi all && \
+	docker builder prune -f
 
 ##
 # start

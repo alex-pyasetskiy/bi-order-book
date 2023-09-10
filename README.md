@@ -9,6 +9,6 @@ Requirements:
 Quick start
 ----------------
 
-1. In the root directory run ```make build && make start```;
+1. In the root directory run ```make build && make up```;
 2. Check ```make help``` for additional ```make``` commands description
 3. Open browser ```localhost:8989```
